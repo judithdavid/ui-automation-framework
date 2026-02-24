@@ -21,11 +21,11 @@ It demonstrates Page Object Model (POM) design, explicit wait synchronization, r
 ```
 automation-framework/
 │
-├── config/            
-├── pages/             
-├── tests/            
-├── utils/             
-├── conftest.py        
+├── config/            # Environment configuration
+├── pages/             # Page Object classes
+├── tests/             # Test cases
+├── utils/             # Driver factory
+├── conftest.py        # PyTest fixtures
 ├── requirements.txt
 └── README.md
 ```
