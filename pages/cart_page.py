@@ -1,16 +1,22 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from pages.base_page import BasePage
+from selenium.common.exceptions import TimeoutException
 
-class CartPage:
+class CartPage(BasePage):
 
     cart_item_name = (By.CLASS_NAME, "inventory_item_name")
 
     def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        super().__init__(driver)
 
     def get_cart_item_name(self):
-        return self.wait.until(
-            EC.visibility_of_element_located(self.cart_item_name)
-        ).text
+        return self.get_text(self.cart_item_name)
+
+    def is_item_present(self):
+
+        try:
+            self.get_text(self.cart_item_name)
+            return True
+
+        except TimeoutException:
+            return False

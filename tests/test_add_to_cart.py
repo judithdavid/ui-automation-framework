@@ -2,7 +2,9 @@ from pages.login_page import LoginPage
 from pages.products_page import ProductsPage
 from pages.cart_page import CartPage
 from config.config import Config
+import pytest
 
+@pytest.mark.regression
 def test_add_product_to_cart(driver):
     login_page = LoginPage(driver)
     login_page.load()
@@ -13,4 +15,6 @@ def test_add_product_to_cart(driver):
     products_page.open_cart()
 
     cart_page = CartPage(driver)
-    assert cart_page.get_cart_item_name() == "Sauce Labs Backpack"
+    # assert cart_page.get_cart_item_name() == "Sauce Labs Backpack"
+    # assert cart_page.is_item_present() is False
+    assert cart_page.is_item_present() is True

@@ -16,3 +16,10 @@ __pycache__/
 
 # OS
 .DS_Store
+
+logs/
+screenshots/
+reports/
+__pycache__/
+.pytest_cache/
+.env

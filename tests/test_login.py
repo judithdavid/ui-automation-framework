@@ -1,7 +1,9 @@
 from pages.login_page import LoginPage
 from pages.products_page import ProductsPage
 from config.config import Config
+import pytest
 
+@pytest.mark.smoke
 def test_valid_login(driver):
     login_page = LoginPage(driver)
     login_page.load()

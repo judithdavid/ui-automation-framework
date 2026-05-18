@@ -1,0 +1,37 @@
+name: UI Automation Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run UI Tests
+        env:
+          HEADLESS: true
+          APP_USERNAME: standard_user
+          APP_PASSWORD: secret_sauce
+          LOG_LEVEL: INFO
+        run: |
+          pytest -v

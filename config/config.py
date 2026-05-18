@@ -1,6 +1,8 @@
 
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 class Config:
 
     ENV = os.getenv("ENV", "qa")
@@ -17,6 +19,8 @@ class Config:
     PASSWORD = os.getenv("APP_PASSWORD", "secret_sauce")
 
     HEADLESS = os.getenv("HEADLESS", "false").lower() == "true"
+    
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
     
     if BASE_URL is None:
         raise ValueError(f"Invalid ENV value: {ENV}")
