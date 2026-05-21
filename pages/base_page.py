@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils.logger import get_logger
+from selenium.webdriver.remote.webelement import WebElement
 
 import time
 
@@ -16,13 +17,6 @@ class BasePage:
         self.wait = WebDriverWait(driver, timeout)
         self.logger = get_logger(__name__)
 
-    # def click(self, locator):
-
-    #     self.logger.info(f"Clicking element: {locator}")
-
-    #     self.wait.until(
-    #         EC.element_to_be_clickable(locator)
-    #     ).click()
 
     def click(self, locator, retries=2):
 
@@ -34,9 +28,7 @@ class BasePage:
                     f"Clicking element: {locator}"
                 )
 
-                self.wait.until(
-                    EC.element_to_be_clickable(locator)
-                ).click()
+                self.wait_for_clickable(locator).click()
 
                 return
 
@@ -62,9 +54,7 @@ class BasePage:
 
         self.logger.info(f"Typing into element: {locator}")
 
-        element = self.wait.until(
-            EC.visibility_of_element_located(locator)
-        )
+        element = self.wait_for_visibility(locator)
 
         element.clear()
         element.send_keys(text)
@@ -82,3 +72,49 @@ class BasePage:
         self.logger.info(f"Opening URL: {url}")
 
         self.driver.get(url)
+
+    def wait_for_visibility(self, locator) -> WebElement:
+
+        self.logger.debug(
+            f"Waiting for visibility: {locator}"
+        )
+
+        return self.wait.until(
+            EC.visibility_of_element_located(locator)
+        )
+
+
+    def wait_for_clickable(self, locator) -> WebElement:
+
+        self.logger.debug(
+            f"Waiting for clickable element: {locator}"
+        )
+
+        return self.wait.until(
+            EC.element_to_be_clickable(locator)
+        )
+    
+    def is_element_visible(self, locator, timeout=5):
+
+        try:
+
+            WebDriverWait(
+                self.driver,
+                timeout
+            ).until(
+                EC.visibility_of_element_located(locator)
+            )
+
+            return True
+
+        except Exception:
+
+            return False
+        
+    def get_page_title(self):
+
+        self.logger.debug(
+            "Fetching browser title"
+        )
+
+        return self.driver.title
