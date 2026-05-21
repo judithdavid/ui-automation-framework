@@ -14,9 +14,17 @@ def driver():
 
     driver = create_driver()
 
+    logger.info(
+    f"Browser Started | "
+    f"Browser: {driver.capabilities['browserName']} | "
+    f"Version: {driver.capabilities.get('browserVersion')}"
+    )
+
     yield driver
 
     driver.quit()
+
+    logger.info("Browser Closed")
 
 
 @pytest.hookimpl(hookwrapper=True)
